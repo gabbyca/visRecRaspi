@@ -10,16 +10,30 @@ if not stream.isOpened():
     print("no stream")
     exit()
 
+fps = int(stream.get(cv2.CAP_PROP_FPS))
+width = int(stream.get(3))
+height = int(stream.get(4))
+
+#write video (save)
+output = cv2.VideoWriter("videoStorage/stream.mpg4",cv2.VideoWriter_fourcc('M','P','G','4'),fps,(width, height))
+
+
+
 #if stream found, return the frames of the screen 
 while(True):
     ret, frame = stream.read()
     if not ret:
         print("stream ended")
         break
+
+    cv2.resize(frame, (width,height))    
+    output.write(frame)
     cv2.imshow("Webcam", frame)
     if cv2.waitKey(1) == ord('q'):
         break
     
+
+
 
 stream.release()
 cv2.destroyAllWindows()
