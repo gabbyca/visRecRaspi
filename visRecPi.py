@@ -13,9 +13,10 @@ if not stream.isOpened():
 fps = int(stream.get(cv2.CAP_PROP_FPS))
 width = int(stream.get(3))
 height = int(stream.get(4))
+size = (width, height)
 
 #write video (save)
-output = cv2.VideoWriter("videoStorage/stream.mpg4",cv2.VideoWriter_fourcc('M','P','G','4'),fps,(width, height))
+output = cv2.VideoWriter('videoStorage/stream.avi',cv2.VideoWriter_fourcc('M','J','P','G'),fps,size)
 
 
 
@@ -34,6 +35,7 @@ while(True):
     
 
 
-
+output.release()
 stream.release()
 cv2.destroyAllWindows()
+print("video saved")
