@@ -16,7 +16,7 @@ height = int(stream.get(4))
 size = (width, height)
 
 #write video (save)
-output = cv2.VideoWriter('videoStorage/stream.avi',cv2.VideoWriter_fourcc('M','J','P','G'),fps,size)
+output = cv2.VideoWriter('videoStorageOpencv/stream.avi',cv2.VideoWriter_fourcc('M','J','P','G'),fps,size)
 
 
 
