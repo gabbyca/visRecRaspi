@@ -12,7 +12,7 @@ chopsaw=cv2.imread('chopsaw.jpg', 0)
 drillPress= cv2.imread('drillPress.jpg', 0)
 
 #query images 
-sanderBandsawChopsaw = cv2.imread('sanderBandsawChopsaw.jpg', 0)
+
 sanderDrillBandsaw = cv2.imread('sanderDrillBandsaw', 0)
 millChopsaw = cv2.imread('millChopsaw.jpg', 0)
 
