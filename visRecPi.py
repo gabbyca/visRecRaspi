@@ -11,33 +11,40 @@ mill=cv2.imread('bigDrillPress.jpg', 0)
 chopsaw=cv2.imread('chopsaw.jpg', 0)
 drillPress= cv2.imread('drillPress.jpg', 0)
 
+#query images 
+sanderBandsawChopsaw = cv2.imread('sanderBandsawChopsaw.jpg', 0)
+sanderDrillBandsaw = cv2.imread('sanderDrillBandsaw', 0)
+millChopsaw = cv2.imread('millChopsaw.jpg', 0)
 
 #orb detection 
 orb = cv2.ORB_create()
 
+#bandsaw
 kp1 , des1 = orb.detectAndCompute(bandsaw, None)
-kp2 , des2 = orb.detectAndCompute(mill, None)
-kp3 , des3 = orb.detectAndCompute(chopsaw, None)
-kp4 , des4 = orb.detectAndCompute(drillPress, None)
-
+kp2 , des2 = orb.detectAndCompute(sanderBandsawChopsaw, None)
+kp3, des3 = orb.detectAndCompute(sanderDrillBandsaw, None)
+#mill
+kp4 , des4 = orb.detectAndCompute(mill, None)
+kp5, des5 = orb.detectAndCompute( millChopsaw, None)
+#chopsaw
+kp6 , des6 = orb.detectAndCompute(chopsaw, None)
+kp7 , des7 = orb.detectAndCompute(sanderBandsawChopsaw, None)
+#drillPress
+kp8 , des8 = orb.detectAndCompute(drillPress, None)
+kp9, des9 = orb.detectAndCompute(sanderDrillBandsaw, None)
 
 #brute force matcher
 bf = cv2.BFMatcher()
+
 matchesBandsaw1 = bf.knnMatch(des1, des2, k=2)
 matchesBandsaw2 = bf.knnMatch(des1, des3, k=2)
-matchesBandsaw3 = bf.knnMatch(des1, des4, k=2)
 
-matchesMill1 = bf.knnMatch(des2, des1, k=2)
-matchesMill2 = bf.knnMatch(des2, des3, k=2)
-matchesMill3 = bf.knnMatch(des2, des4, k=2)
+matchesMill1 = bf.knnMatch(des4, des5, k=2)
 
-matchesChopsaw1 = bf.knnMatch(des3, des1, k=2)
-matchesChopsaw2 = bf.knnMatch(des3, des2, k=2)
-matchesChopsaw3 = bf.knnMatch(des3, des4, k=2)
+matchesChopsaw1 = bf.knnMatch(des6, des7, k=2)
 
-matchesdrillPress1 = bf.knnMatch(des4, des1, k=2)
-matchesdrillPress2 = bf.knnMatch(des4, des2, k=2)
-matchesdrillPress3 = bf.knnMatch(des4, des3, k=2)
+matchesdrillPress1 = bf.knnMatch(des8, des9, k=2)
+
 
 good = []
 #may have to change 0.75
@@ -47,57 +54,30 @@ for m,n in matchesBandsaw1:
 for m,n in matchesBandsaw2:
     if m.distance < 0.75*n.distance:
         good.append([m])
-for m,n in matchesBandsaw3:
-    if m.distance < 0.75*n.distance:
-        good.append([m])
 
 for m,n in matchesMill1:
-    if m.distance < 0.75*n.distance:
-        good.append([m])
-for m,n in matchesMill2:
-    if m.distance < 0.75*n.distance:
-        good.append([m])
-for m,n in matchesMill3:
     if m.distance < 0.75*n.distance:
         good.append([m])
 
 for m,n in matchesChopsaw1:
     if m.distance < 0.75*n.distance:
         good.append([m])
-for m,n in matchesChopsaw2:
-    if m.distance < 0.75*n.distance:
-        good.append([m])
-for m,n in matchesChopsaw3:
-    if m.distance < 0.75*n.distance:
-        good.append([m])
 
 for m,n in matchesdrillPress1:
     if m.distance < 0.75*n.distance:
         good.append([m])
-for m,n in matchesdrillPress2:
-    if m.distance < 0.75*n.distance:
-        good.append([m])
-for m,n in matchesdrillPress3:
-    if m.distance < 0.75*n.distance:
-        good.append([m])
 
 
 
-img5 = cv2.drawMatchesKnn(bandsaw, kp1, mill, kp2, good, None, flags=2)
-img6 = cv2.drawMatchesKnn(bandsaw, kp1, chopsaw, kp3, good, None, flags=2)
-img7 = cv2.drawMatchesKnn(bandsaw, kp1, drillPress, kp4, good, None, flags=2)
+img5 = cv2.drawMatchesKnn(bandsaw, kp1, sanderBandsawChopsaw, kp2, good, None, flags=2)
+img6 = cv2.drawMatchesKnn(bandsaw, kp1, sanderDrillBandsaw, kp3, good, None, flags=2)
 
-img8 = cv2.drawMatchesKnn(mill, kp2, bandsaw, kp1, good, None, flags=2)
-img9 = cv2.drawMatchesKnn(mill, kp2, chopsaw, kp3, good, None, flags=2)
-img10 = cv2.drawMatchesKnn(mill, kp2, drillPress, kp4, good, None, flags=2)
+img8 = cv2.drawMatchesKnn(mill, kp4, millChopsaw, kp5, good, None, flags=2)
 
-img11 = cv2.drawMatchesKnn(chopsaw, kp3, bandsaw, kp1, good, None, flags=2)
-img12 = cv2.drawMatchesKnn(chopsaw, kp3, mill, kp2, good, None, flags=2)
-img13 = cv2.drawMatchesKnn(chopsaw, kp3, drillPress, kp4, good, None, flags=2)
+img11 = cv2.drawMatchesKnn(chopsaw, kp6, millChopsaw, kp7, good, None, flags=2)
 
-img14 = cv2.drawMatchesKnn(drillPress, kp4, bandsaw, kp1, good, None, flags=2)
-img15 = cv2.drawMatchesKnn(drillPress, kp4, mill, kp2, good, None, flags=2)
-img16 = cv2.drawMatchesKnn(drillPress, kp4, chopsaw, kp3, good, None, flags=2)
+img14 = cv2.drawMatchesKnn(drillPress, kp8, sanderDrillBandsaw, kp9, good, None, flags=2)
+
 
 cv2.imshow('img5', img5)
 
