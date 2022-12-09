@@ -6,11 +6,11 @@ import numpy as np
 camera = 'tcp://0.0.0.0:5000'
 stream = cv2.VideoCapture(camera)
 
-bandsaw =cv2.imread('bandsaw.jpg')
-mill=cv2.imread('bigDrillPress.jpg')
-chopsaw=cv2.imread('chopsaw.jpg')
-drillPress= cv2.imread('drillPress.jpg')
-sander=cv2.imread('sander.jpg')
+bandsaw =cv2.imread('bandsaw.jpg', 0)
+mill=cv2.imread('bigDrillPress.jpg', 0)
+chopsaw=cv2.imread('chopsaw.jpg', 0)
+drillPress= cv2.imread('drillPress.jpg', 0)
+sander=cv2.imread('sander.jpg', 0)
 
 #orb detection 
 orb = cv2.ORB_create()
@@ -27,6 +27,11 @@ imgKp3 = cv2.drawKeypoints(chopsaw, kp3, None)
 imgKp4 = cv2.drawKeypoints(drillPress, kp4, None)
 imgKp5 = cv2.drawKeypoints(sander, kp5, None)
 
+cv2.imshow('kp1', imgKp1)
+cv2.imshow('kp2', imgKp2)
+cv2.imshow('kp3', imgKp3)
+cv2.imshow('kp4', imgKp4)
+cv2.imshow('kp5', imgKp5)
 
 #if stream is not opened print no stream 
 if not stream.isOpened(): 
