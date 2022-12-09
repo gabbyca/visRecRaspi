@@ -108,6 +108,7 @@ while(True):
         print("stream ended")
         break
 
+
     cv2.resize(frame, (width,height))    
     output.write(frame)
     cv2.imshow("Webcam", frame)
