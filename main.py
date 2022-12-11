@@ -18,15 +18,13 @@ def findFace(frame):
 
 #set dimensions
 fps = int(stream.get(cv2.CAP_PROP_FPS))
-width = int(stream.get(3))
-height = int(stream.get(4))
-size = (width, height)
+
 
 t= time.localtime()
 current_time = time.strftime("%H:%M:%S", t)
 
 #write video (save)
-output = cv2.VideoWriter('videoStorageOpencv/' + current_time + '.avi',cv2.VideoWriter_fourcc('M','J','P','G'),fps,size)
+output = cv2.VideoWriter('videoStorageOpencv/' + current_time + '.avi',cv2.VideoWriter_fourcc('M','J','P','G'),fps,(70,70))
 
 #variables from other classes
 desList = classifier.desList
