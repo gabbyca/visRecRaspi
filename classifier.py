@@ -7,6 +7,7 @@ import os
 orb=cv2.ORB_create()
 path = 'imagesSingle'
 
+
 images = []
 classNames =[]
 
@@ -51,4 +52,11 @@ def findID(img, desList):
     return finVal
 
 desList=findDes(images)
+
+#remove after testing 
+video = 'IMG_4549.mp4'
+imgOriginal = video.copy()
+id =findID(video, desList)
+if id != -1:
+    cv2.putText(imgOriginal, classNames[id], (50,50), cv2.FONT_KERSHEY_COMPLEX,1,(0,0,255),1)
 

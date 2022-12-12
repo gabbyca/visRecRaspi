@@ -2,7 +2,6 @@ import cv2
 import time
 import numpy as np
 import classifier
-import facialRec
 
 #initialize camera
 camera = 'tcp://0.0.0.0:5000'
@@ -18,7 +17,6 @@ def findFace(frame):
 
 #set dimensions
 fps = int(stream.get(cv2.CAP_PROP_FPS))
-
 
 t= time.localtime()
 current_time = time.strftime("%H:%M:%S", t)
