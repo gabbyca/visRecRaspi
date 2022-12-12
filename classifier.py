@@ -27,7 +27,7 @@ def findDes(images):
         desList.append(des)
     return desList
 
-#ids img if descriptors are greater than finvVAL
+#ids img if descriptors are greater than finvVALL
 def findID(img, desList):
     kp2,des2=orb.detectAndCompute(img, None)
     #brute force matcher --!sm processing
