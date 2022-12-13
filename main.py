@@ -12,16 +12,26 @@ stream = cv2.VideoCapture(camera)
 i = 0
 def findFace(frame):
     faceCascade = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
+    eye_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_eye.xml")
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-    faces = faceCascade.detectMultiScale(gray, 1.3, 3)
+    faces = faceCascade.detectMultiScale(gray, 1.3, 6)
     for(x,y,w,h) in faces:
-        roi = frame[y:y+h, x:x+w]
         frame = cv2.rectangle(frame, (x,y), (x+w, y+h), color =(0,255,0), thickness=5)
-    resized = cv2.resize(roi, (70,70))
-    # if the face does not equal one of the faces in the folder then write it 
-    cv2.imwrite('extractedFaces/'+str(i)+'.jpg', resized )
-    i+=1
+        face = frame[y : y+h, x : x+w]
+        gray_face = gray[y : y+h, x : x+w]
+    eyes = eye_cascade.detectMultiScale(gray_face, 1.3, 5)
+    for(xp,yp,wp,hp) in eyes:
+        roiEye = frame[y:y+h, x:x+w]
+        face = cv2.rectangle(face, (xp,yp), (xp+wp, yp+hp), color =(255,0,0), thickness=5)
+    resized = cv2.resize(roiEye, (70,70))
+    
+    # if(!resized.isfoundinanimage inthefolder())  
+    # cv2.imwrite('extractedFaces/student'+str(i)+'.jpg', resized )
+    # i+=1
     return frame
+
+
+
 
 
 #set dimensions
