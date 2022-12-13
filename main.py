@@ -6,26 +6,26 @@ import classifier
 
 
 #initialize camera
-camera = 'tcp://0.0.0.0:5000'
+camera = 'tcp://10.161.141.50:5000'
 stream = cv2.VideoCapture(camera)
 
 i = 0
 def findFace(frame):
     faceCascade = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
-    eye_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_eye.xml")
+   # eye_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_eye.xml")
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     faces = faceCascade.detectMultiScale(gray, 1.3, 6)
     for(x,y,w,h) in faces:
         frame = cv2.rectangle(frame, (x,y), (x+w, y+h), color =(0,255,0), thickness=5)
         face = frame[y : y+h, x : x+w]
-        gray_face = gray[y : y+h, x : x+w]
-    eyes = eye_cascade.detectMultiScale(gray_face, 1.3, 5)
-    for(xp,yp,wp,hp) in eyes:
-        roiEye = frame[y:y+h, x:x+w]
-        face = cv2.rectangle(face, (xp,yp), (xp+wp, yp+hp), color =(255,0,0), thickness=5)
-    resized = cv2.resize(roiEye, (70,70))
+        grayFace = gray[y : y+h, x : x+w]
+    # eyes = eye_cascade.detectMultiScale(grayFace, 1.3, 5)
+    # for(xp,yp,wp,hp) in eyes:
+    #     roiEye = frame[y:y+h, x:x+w]
+    #     face = cv2.rectangle(face, (xp,yp), (xp+wp, yp+hp), color =(255,0,0), thickness=5)
+    # resized = cv2.resize(roiEye, (70,70))
     
-    # if(!resized.isfoundinanimage inthefolder())  
+    # if(!resized.isfoundinanimage inthefolder())  #traverse the folder and check for eye in each image
     # cv2.imwrite('extractedFaces/student'+str(i)+'.jpg', resized )
     # i+=1
     return frame
