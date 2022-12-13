@@ -3,17 +3,26 @@ import time
 import numpy as np
 import classifier
 
+
+
 #initialize camera
 camera = 'tcp://0.0.0.0:5000'
 stream = cv2.VideoCapture(camera)
 
-faceCascade = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
+i = 0
 def findFace(frame):
+    faceCascade = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     faces = faceCascade.detectMultiScale(gray, 1.3, 3)
     for(x,y,w,h) in faces:
+        roi = frame[y:y+h, x:x+w]
         frame = cv2.rectangle(frame, (x,y), (x+w, y+h), color =(0,255,0), thickness=5)
+    resized = cv2.resize(roi, (70,70))
+    # if the face does not equal one of the faces in the folder then write it 
+    cv2.imwrite('extractedFaces/'+str(i)+'.jpg', resized )
+    i+=1
     return frame
+
 
 #set dimensions
 fps = int(stream.get(cv2.CAP_PROP_FPS))
